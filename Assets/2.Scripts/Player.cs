@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float spd = 0.05f; 
+    public float maxSpd = 1f;
+    public float JumpScale = 1f;
     GameManager gameManager;
-    Transform playerTransform;
+    Rigidbody2D rigidbody2D;
+
+    bool isJumpable = true;
     // Start is called before the first frame update
 
     private void Awake()
@@ -14,7 +17,7 @@ public class Player : MonoBehaviour
         //gameManager 오브젝트를 찾음
         gameManager = FindObjectOfType<GameManager>();
         getPlayerReference(gameManager.Character);
-        playerTransform = GetComponent<Transform>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
     }
     void Start()
     {
@@ -23,14 +26,35 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        //실제 조작
+        if (Input.GetKey(KeyCode.Space))
         {
-            playerTransform.position = new Vector2(playerTransform.position.x - spd, playerTransform.position.y);
+            this.rigidbody2D.velocity = new Vector2(this.rigidbody2D.velocity.x > 0 ? maxSpd : -maxSpd, 0);
+        }
+        else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            this.rigidbody2D.velocity = new Vector2(0, this.rigidbody2D.velocity.y);
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            this.rigidbody2D.velocity -= Vector2.right;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            playerTransform.position = new Vector2(playerTransform.position.x + spd, playerTransform.position.y);
+            rigidbody2D.velocity += Vector2.right;
         }
+
+        //플레이어의 이동 속도 등을 제한 하는 부분 
+        if (Mathf.Abs(rigidbody2D.velocity.x) > maxSpd)
+            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x > 0 ? maxSpd : -1 * maxSpd, rigidbody2D.velocity.y);
+
+        if (Input.GetKeyDown(KeyCode.W) && isJumpable)
+        {
+            rigidbody2D.velocity += Vector2.up * JumpScale;
+        }
+
+        isJumpable = this.rigidbody2D.velocity.y == 0 ? true : false;
+        Debug.Log(rigidbody2D.velocity.y);
     }
 
     
