@@ -11,12 +11,19 @@ public class SceneController:MonoBehaviour
     }
     public void LoadScene(string _scene)
     {
-        StartCoroutine(LoadSceneCoroutine(_scene));
+        //리눅스에선 코루틴이 작동하지 않는 듯 함
+        if (Application.platform == RuntimePlatform.LinuxPlayer || Application.platform == RuntimePlatform.LinuxEditor)
+        {
+            SceneManager.LoadScene(_scene);
+        }
+        else
+        {
+            StartCoroutine(LoadSceneCoroutine(_scene));
+        }
     }
 
     IEnumerator LoadSceneCoroutine(string _scene) {
         yield return null;
-        Debug.Log(true); 
         //바꿀 장면을 불러옴
         AsyncOperation op = SceneManager.LoadSceneAsync(_scene);
         //장면 전환을 막음

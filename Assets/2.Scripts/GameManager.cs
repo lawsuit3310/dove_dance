@@ -7,10 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    usrDatManager usrDatManager;
+    public usrDatManager usrDatManager;
     public userData userDataContainer;
+    public Context context;
     public SceneController sc;
-
+    public Text text;
     public GameObject sceneController;
 
     public int Character = 0;
@@ -44,24 +45,17 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.touchCount != 0) {
-            //리눅스에선 이거 안먹음
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Ended && SceneManager.GetActiveScene().name == "TitleScreen")
-            {
-                
-            }
-        }
+
     }
 
     public void goToMenu()
     {
+        text.text = "Loading...";
         sc.LoadScene("Menu");
     }
 
     public void debug()
     {
         Debug.Log(true);
-
     }
 }

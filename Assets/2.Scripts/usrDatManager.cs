@@ -75,6 +75,7 @@ public class usrDatManager{
         dataPath = path + "/Assets/" + _fileName;
         if (File.Exists(dataPath)){
             usrData = File.ReadAllText(dataPath);
+            Debug.Log(usrData);
             T t = JsonUtility.FromJson<T>(usrData);
             return t;
         }
