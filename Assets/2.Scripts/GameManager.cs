@@ -45,11 +45,23 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if(Input.touchCount != 0) {
+            //리눅스에선 이거 안먹음
             Touch touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Ended && SceneManager.GetActiveScene().name == "TitleScreen")
             {
-                sc.LoadScene("Menu");
+                
             }
         }
+    }
+
+    public void goToMenu()
+    {
+        sc.LoadScene("Menu");
+    }
+
+    public void debug()
+    {
+        Debug.Log(true);
+
     }
 }
