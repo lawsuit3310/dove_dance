@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 {
     usrDatManager usrDatManager;
     public userData userDataContainer;
-    SceneController sc;
+    public SceneController sc;
 
     public GameObject sceneController;
 

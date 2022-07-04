@@ -7,27 +7,31 @@ using UnityEngine.EventSystems;
 public class MenuManager : MonoBehaviour
 {
     GameManager gameManager;
+
+    public GameObject[] explainCharacter;
     private void Awake()
     {
         //gameManager 오브젝트를 찾음
         gameManager = FindObjectOfType<GameManager>();
+        closeChrExplain();
     }
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void chrClick()
     {
         //가장 최근에 클릭한 오브젝트의 이름을 가져옴
         string selectedObject = EventSystem.current.currentSelectedGameObject.name;
-        switch (selectedObject) {
+        switch (selectedObject)
+        {
             case "chr1":
                 gameManager.Character = 1;
                 break;
@@ -55,5 +59,24 @@ public class MenuManager : MonoBehaviour
         }
 
         Debug.Log(gameManager.Character);
+        showChrExplain();
+    }
+    public void showChrExplain()
+    {
+        foreach (GameObject o in explainCharacter) {
+            o.SetActive(true);
+        }
+    }
+
+    public void closeChrExplain(){
+
+        foreach (GameObject o in explainCharacter)
+        {
+            o.SetActive(false);
+        }
+    }
+
+    public void startGame() {
+        gameManager.sc.LoadScene("Game");
     }
 }
