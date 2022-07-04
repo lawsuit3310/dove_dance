@@ -7,16 +7,21 @@ public class GameManager : MonoBehaviour
 {
     usrDatManager usrDatManager;
     userData userDataContainer;
+    SceneController sc;
+
+    public GameObject sceneController;
     // Start is called before the first frame update
     void Awake()
     {
         DontDestroyOnLoad(this);    
         userDataContainer = new userData();
         usrDatManager = new usrDatManager();
+        sc = sceneController.GetComponent<SceneController>();
         usrDatManager.ReadData();
 
 
         #region Testing Area
+
         #endregion
     }
 
@@ -29,7 +34,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if(Input.touchCount != 0) {
-            Debug.Log("true");
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Ended) {
+                sc.LoadScene("Menu");
+            }
         }
     }
 }
