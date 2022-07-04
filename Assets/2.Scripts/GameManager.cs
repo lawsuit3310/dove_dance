@@ -1,15 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     usrDatManager usrDatManager;
-    userData userDataContainer;
+    public userData userDataContainer;
     SceneController sc;
 
     public GameObject sceneController;
+
+    public int Character = 0;
     // Start is called before the first frame update
     void Awake()
     {
@@ -17,17 +21,24 @@ public class GameManager : MonoBehaviour
         userDataContainer = new userData();
         usrDatManager = new usrDatManager();
         sc = sceneController.GetComponent<SceneController>();
-        usrDatManager.ReadData();
-
+        userDataContainer = usrDatManager.ReadData<userData>("usrData.json");
+        Debug.Log($"json load was successful {userDataContainer.DUI}");
 
         #region Testing Area
+        try
+        {
 
+        }
+        catch(Exception e)
+        {
+            Debug.Log(e);
+        }
         #endregion
     }
 
-    void Start(){
-        userDataContainer = usrDatManager.ReadData<userData>("usrData.json");
-        Debug.Log($"json load was successful {userDataContainer.DUI}");
+    void Start()
+    {
+
     }
 
     // Update is called once per frame
@@ -35,7 +46,8 @@ public class GameManager : MonoBehaviour
     {
         if(Input.touchCount != 0) {
             Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Ended) {
+            if (touch.phase == TouchPhase.Ended && SceneManager.GetActiveScene().name == "TitleScreen")
+            {
                 sc.LoadScene("Menu");
             }
         }
