@@ -29,11 +29,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         //실제 조작
-        if (Input.GetKey(KeyCode.Space) && rigidbody2D.velocity.y <= 0)
+        if (Input.GetKey(KeyCode.Space) && rigidbody2D.velocity.y < 0 && rigidbody2D.velocity.x != 0)
         {
             this.rigidbody2D.velocity = new Vector2(this.rigidbody2D.velocity.x > 0 ? maxSpd : -maxSpd, -0.5f);
         }
-        else if (Input.GetKeyUp(KeyCode.Space))
+        else if (Input.GetKeyUp(KeyCode.Space) && !isJumpable)
         {
             this.rigidbody2D.velocity = new Vector2(0, this.rigidbody2D.velocity.y);
         }
@@ -47,15 +47,16 @@ public class Player : MonoBehaviour
             rigidbody2D.velocity += Vector2.right;
             playerFilp(true);
         }
+        if (Input.GetKey(KeyCode.Space) && isJumpable)
+        {
+            rigidbody2D.velocity += Vector2.up * JumpScale;
+        }
 
         //플레이어의 이동 속도 등을 제한 하는 부분 
         if (Mathf.Abs(rigidbody2D.velocity.x) > maxSpd)
             rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x > 0 ? maxSpd : -1 * maxSpd, rigidbody2D.velocity.y);
 
-        if (Input.GetKey(KeyCode.W) && isJumpable)
-        {
-            rigidbody2D.velocity += Vector2.up * JumpScale;
-        }
+       
 
         isJumpable = this.rigidbody2D.velocity.y == 0 ? true : false;
     }

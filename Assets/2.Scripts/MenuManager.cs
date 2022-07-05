@@ -99,6 +99,15 @@ public class MenuManager : MonoBehaviour
         {
             //캐릭터가 잠겼을 때의 동작
             name.text = "???";
+            string temp = "";
+            for (int i = 0; i < chr.condition.Length; i++)
+            {
+                temp += chr.explanation[i];
+                if (i % 27 == 0 && i != 0)
+                {
+                    temp += "\n";
+                }
+            }
             explanation.text = chr.condition;
             //게임 시작 버튼 숨김
             explainCharacter[5].SetActive(false);
@@ -108,7 +117,17 @@ public class MenuManager : MonoBehaviour
             Debug.Log("The Game is Playable.");
 
             name.text = chr.name;
-            explanation.text = chr.explanation;
+
+            string temp = "";
+            for (int i = 0; i < chr.explanation.Length; i++)
+            {
+                temp += chr.explanation[i];
+                if (i % 27 == 0 && i != 0)
+                {
+                    temp += "\n";
+                }
+            }
+            explanation.text = temp;
         }
     }
 

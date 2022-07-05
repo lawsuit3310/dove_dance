@@ -24,7 +24,7 @@ public class CameraControll : MonoBehaviour
             trans.position = new Vector3(player.transform.position.x, trans.position.y, trans.position.z);
         }
 
-        if (Mathf.Abs(player.transform.position.y) < 9)
+        if (Mathf.Abs(player.transform.position.y) < 8.5)
         {
             trans.position = new Vector3(trans.position.x, player.transform.position.y, trans.position.z);
         }
